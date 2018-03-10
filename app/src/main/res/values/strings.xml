@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">The Weather App</string>
 
-    <string name="title_weather">Weather</string>
-    <string name="title_forecast">Forecast</string>
+    <string name="title_weather">Current Weather</string>
+    <string name="title_forecast">Forecast Weather</string>
     <string name="edt_enter_city_name">Enter city name</string>
     <string name="edt_please_enter_city_name">Please enter city name</string>
     <string name="content_this_is_icon_weather">This is icon weather</string>
@@ -15,5 +15,9 @@
     <string name="btn_change_to_fahrenheit">Change to &#xb0;F</string>
     <string name="btn_change_to_celsius">Change to &#xb0;C</string>
     <string name="btn_search">Search</string>
+    <string name="text_title_current_weather">The Current Weather searching from \nCity name</string>
+    <string name="text_title_forecast_weather">The Forecast Weather searching from \nCity name</string>
+
+    <string name="btn_font_search">&#xf002;</string>
 
 </resources>

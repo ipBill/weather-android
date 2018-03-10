@@ -24,12 +24,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mehdi.sakout.fancybuttons.FancyButton;
 import weather.com.theweatherapp.R;
 import weather.com.theweatherapp.forecast.adapter.presenter.WeatherForecastAdapterPresenter;
 import weather.com.theweatherapp.forecast.adapter.view.WeatherForecastAdapter;
 import weather.com.theweatherapp.forecast.dao.WeatherForecastDao;
 import weather.com.theweatherapp.forecast.interactor.ForecastListInteractor;
 import weather.com.theweatherapp.forecast.presenter.ForecastListPresenter;
+import weather.com.theweatherapp.util.HideKeyBoardUtil;
 
 public class ForecastListFragment extends Fragment implements IForecastListView {
 
@@ -54,10 +56,11 @@ public class ForecastListFragment extends Fragment implements IForecastListView 
     RecyclerView recyclerViewForecast;
 
     @BindView(R.id.btnSearch)
-    Button btnSearch;
+    FancyButton btnSearch;
 
     @OnClick(R.id.btnSearch)
     public void btnSearchPressed(View v) {
+        HideKeyBoardUtil.getInstance().hideKeyBoard(v);
         forecastListPresenter.searchWeatherWithCityName(edtCityName.getText().toString(), unit);
     }
 
@@ -167,18 +170,24 @@ public class ForecastListFragment extends Fragment implements IForecastListView 
 
     @Override
     public void showDialogCanNotLoadService() {
-        showAlertDialog(getString(R.string.dialog_fail_server));
+        if(isAdded()) {
+            showAlertDialog(getString(R.string.dialog_fail_server));
+        }
     }
 
     @Override
     public void showDialogMessage(String message) {
-        showAlertDialog(message);
+        if(isAdded()) {
+            showAlertDialog(message);
+        }
     }
 
     @Override
     public void updateViewForecastWeatherList(WeatherForecastDao dao) {
-        hideSwipeLayout();
-        forecastAdapterPresenter.updateViewForecastWeatherList(dao);
+        if(isAdded()) {
+            hideSwipeLayout();
+            forecastAdapterPresenter.updateViewForecastWeatherList(dao);
+        }
     }
 
     private void showAlertDialog(String message) {
@@ -202,6 +211,7 @@ public class ForecastListFragment extends Fragment implements IForecastListView 
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                HideKeyBoardUtil.getInstance().hideKeyBoard(getView());
                 forecastListPresenter.searchWeatherWithCityName(edtCityName.getText().toString(), unit);
                 return true;
             }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +11,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,19 +19,19 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mehdi.sakout.fancybuttons.FancyButton;
 import weather.com.theweatherapp.R;
 import weather.com.theweatherapp.util.Constants;
+import weather.com.theweatherapp.util.HideKeyBoardUtil;
 import weather.com.theweatherapp.weather.dao.WeatherSearchDao;
 import weather.com.theweatherapp.weather.interactor.WeatherSearchInteractor;
 import weather.com.theweatherapp.weather.presenter.WeatherSearchPresenter;
@@ -81,10 +79,20 @@ public class WeatherSearchFragment extends Fragment implements IWeatherSearchVie
     TextView tvHumidityResult;
 
     @BindView(R.id.btnChangeTemperature)
-    Button btnChangeTemperature;
+    FancyButton btnChangeTemperature;
+
+    @BindView(R.id.btnSearch)
+    FancyButton btnSearch;
+
+    @OnClick(R.id.btnSearch)
+    public void btnSearchPressed(View v) {
+        HideKeyBoardUtil.getInstance().hideKeyBoard(v);
+        weatherSearchPresenter.searchWeatherWithCityName(edtCityName.getText().toString(), unit);
+    }
 
     @OnClick(R.id.btnChangeTemperature)
     public void btnChangeTemperaturePressed(View v) {
+        HideKeyBoardUtil.getInstance().hideKeyBoard(v);
         if (unit.equals("imperial")) {
             unit = "metric";
             btnChangeTemperature.setText(getString(R.string.btn_change_to_fahrenheit));
@@ -94,14 +102,6 @@ public class WeatherSearchFragment extends Fragment implements IWeatherSearchVie
             btnChangeTemperature.setText(getString(R.string.btn_change_to_celsius));
             weatherSearchPresenter.searchWeatherWithCityName(edtCityName.getText().toString(), "imperial");
         }
-    }
-
-    @BindView(R.id.btnSearch)
-    Button btnSearch;
-
-    @OnClick(R.id.btnSearch)
-    public void btnSearchPressed(View v) {
-        weatherSearchPresenter.searchWeatherWithCityName(edtCityName.getText().toString(), unit);
     }
 
     public WeatherSearchFragment() {
@@ -129,7 +129,7 @@ public class WeatherSearchFragment extends Fragment implements IWeatherSearchVie
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_weather_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_current_weather, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }
@@ -274,6 +274,7 @@ public class WeatherSearchFragment extends Fragment implements IWeatherSearchVie
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                HideKeyBoardUtil.getInstance().hideKeyBoard(getView());
                 weatherSearchPresenter.searchWeatherWithCityName(edtCityName.getText().toString(), unit);
                 return true;
             }

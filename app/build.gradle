@@ -49,5 +49,7 @@ dependencies {
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
 
+    compile "com.github.medyo:fancybuttons:$rootProject.ext.fancyButtonVersion"
+
 
 }

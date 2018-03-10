@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import weather.com.theweatherapp.R;
 import weather.com.theweatherapp.forecast.dao.WeatherForecastDao;
 import weather.com.theweatherapp.util.Constants;
+import weather.com.theweatherapp.util.DateTimeUtil;
 
 /**
  * Created by bill on 10/3/2018 AD.
@@ -38,7 +39,7 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
     @NonNull
     @Override
     public WeatherForecastViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weather_forcast, parent, false);
+        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_forecast_list, parent, false);
         context = parent.getContext();
         return new WeatherForecastViewHolder(rootView);
     }
@@ -66,7 +67,7 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
         holder.tvHumidity.setText(context.getString(R.string.text_humidity));
         holder.tvHumidityResult.setText(String.valueOf(weatherObject.getTemperatureObject().getHumidity() + Constants.degreePercent));
 
-        holder.tvDateTime.setText(String.valueOf(weatherObject.getDtText()));
+        holder.tvDateTime.setText(String.valueOf(DateTimeUtil.getInstance().getDateFormatOutput(weatherObject.getDtText())));
     }
 
     @Override
