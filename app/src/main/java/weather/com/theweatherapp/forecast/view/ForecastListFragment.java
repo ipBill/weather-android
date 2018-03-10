@@ -58,7 +58,7 @@ public class ForecastListFragment extends Fragment implements IForecastListView 
 
     @OnClick(R.id.btnSearch)
     public void btnSearchPressed(View v) {
-
+        forecastListPresenter.searchWeatherWithCityName(edtCityName.getText().toString(), unit);
     }
 
     public ForecastListFragment() {
@@ -150,6 +150,14 @@ public class ForecastListFragment extends Fragment implements IForecastListView 
     public void updateViewCityNameEmpty() {
         textInputCityName.setError(getString(R.string.edt_please_enter_city_name));
         textInputCityName.setErrorEnabled(true);
+
+        hideSwipeLayout();
+    }
+
+    private void hideSwipeLayout() {
+        if (swipeLayout != null && swipeLayout.isRefreshing()) {
+            swipeLayout.setRefreshing(false);
+        }
     }
 
     @Override
@@ -169,9 +177,7 @@ public class ForecastListFragment extends Fragment implements IForecastListView 
 
     @Override
     public void updateViewForecastWeatherList(WeatherForecastDao dao) {
-        if (swipeLayout != null && swipeLayout.isRefreshing()) {
-            swipeLayout.setRefreshing(false);
-        }
+        hideSwipeLayout();
         forecastAdapterPresenter.updateViewForecastWeatherList(dao);
     }
 

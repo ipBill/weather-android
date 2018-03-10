@@ -124,7 +124,6 @@ public class WeatherSearchFragment extends Fragment implements IWeatherSearchVie
     @Override
     public void onResume() {
         super.onResume();
-        weatherSearchPresenter.searchWeatherWithCityName(edtCityName.getText().toString(), unit);
     }
 
     @Override
@@ -198,7 +197,9 @@ public class WeatherSearchFragment extends Fragment implements IWeatherSearchVie
 
     @Override
     public void showDialogCanNotLoadService() {
-        showAlertDialog(getString(R.string.dialog_fail_server));
+        if (isAdded()) {
+            showAlertDialog(getString(R.string.dialog_fail_server));
+        }
     }
 
     @Override
@@ -208,42 +209,48 @@ public class WeatherSearchFragment extends Fragment implements IWeatherSearchVie
 
     @Override
     public void updateViewTemperatureObject(WeatherSearchDao.WeatherTemperatureObject currentWeatherObject) {
-        if (unit.equals("metric")) { //Celsius
-            tvTemperatureMax.setText(getString(R.string.text_max_temperature));
-            tvTemperatureResultMax.setText(String.valueOf(currentWeatherObject.getTempMax() + Constants.degreeCelsius));
-            tvTemperatureMin.setText(getString(R.string.text_min_temperature));
-            tvTemperatureResultMin.setText(String.valueOf(currentWeatherObject.getTempMin() + Constants.degreeCelsius));
-            tvHumidity.setText(getString(R.string.text_humidity));
-            tvHumidityResult.setText(String.valueOf(currentWeatherObject.getHumidity() + Constants.degreePercent));
-        } else { //Fahrenheit
-            tvTemperatureMax.setText(getString(R.string.text_max_temperature));
-            tvTemperatureResultMax.setText(String.valueOf(currentWeatherObject.getTempMax() + Constants.degreeFahrenheit));
-            tvTemperatureMin.setText(getString(R.string.text_min_temperature));
-            tvTemperatureResultMin.setText(String.valueOf(currentWeatherObject.getTempMin() + Constants.degreeFahrenheit));
-            tvHumidity.setText(getString(R.string.text_humidity));
-            tvHumidityResult.setText(String.valueOf(currentWeatherObject.getHumidity() + Constants.degreePercent));
+        if (isAdded()) {
+            if (unit.equals("metric")) { //Celsius
+                tvTemperatureMax.setText(getString(R.string.text_max_temperature));
+                tvTemperatureResultMax.setText(String.valueOf(currentWeatherObject.getTempMax() + Constants.degreeCelsius));
+                tvTemperatureMin.setText(getString(R.string.text_min_temperature));
+                tvTemperatureResultMin.setText(String.valueOf(currentWeatherObject.getTempMin() + Constants.degreeCelsius));
+                tvHumidity.setText(getString(R.string.text_humidity));
+                tvHumidityResult.setText(String.valueOf(currentWeatherObject.getHumidity() + Constants.degreePercent));
+            } else { //Fahrenheit
+                tvTemperatureMax.setText(getString(R.string.text_max_temperature));
+                tvTemperatureResultMax.setText(String.valueOf(currentWeatherObject.getTempMax() + Constants.degreeFahrenheit));
+                tvTemperatureMin.setText(getString(R.string.text_min_temperature));
+                tvTemperatureResultMin.setText(String.valueOf(currentWeatherObject.getTempMin() + Constants.degreeFahrenheit));
+                tvHumidity.setText(getString(R.string.text_humidity));
+                tvHumidityResult.setText(String.valueOf(currentWeatherObject.getHumidity() + Constants.degreePercent));
+            }
         }
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void updateViewWeatherDetail(WeatherSearchDao.WeatherDetailObject weatherDetailObject) {
-        cvResult.setVisibility(View.VISIBLE);
-        tvTitleWeather.setText(weatherDetailObject.getMain());
-        tvDetailWeather.setText(weatherDetailObject.getDescription());
-        String url = Constants.urlIconWeather + weatherDetailObject.getIcon() + Constants.imagePNGType;
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.error(R.drawable.ic_cancel);
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
-        Glide.with(this)
-                .load(url)
-                .apply(requestOptions)
-                .into(ivWeather);
+        if (isAdded()) {
+            cvResult.setVisibility(View.VISIBLE);
+            tvTitleWeather.setText(weatherDetailObject.getMain());
+            tvDetailWeather.setText(weatherDetailObject.getDescription());
+            String url = Constants.urlIconWeather + weatherDetailObject.getIcon() + Constants.imagePNGType;
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.error(R.drawable.ic_cancel);
+            requestOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+            Glide.with(this)
+                    .load(url)
+                    .apply(requestOptions)
+                    .into(ivWeather);
+        }
     }
 
     @Override
     public void hideWeatherCard() {
-        cvResult.setVisibility(View.GONE);
+        if (isAdded()) {
+            cvResult.setVisibility(View.GONE);
+        }
     }
 
     private void showAlertDialog(String message) {

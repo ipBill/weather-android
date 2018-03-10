@@ -7,6 +7,7 @@ import weather.com.theweatherapp.weather.dao.WeatherSearchDao;
  */
 
 public interface IWeatherSearchView {
+
     void updateViewCityNameEmpty();
 
     void updateViewCityName();
@@ -24,4 +25,5 @@ public interface IWeatherSearchView {
     void showDialogMessage(String message);
 
     void hideWeatherCard();
+
 }

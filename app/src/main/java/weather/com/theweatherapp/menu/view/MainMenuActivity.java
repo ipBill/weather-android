@@ -3,6 +3,7 @@ package weather.com.theweatherapp.menu.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -31,9 +32,11 @@ public class MainMenuActivity extends AppCompatActivity implements IMainMenuView
             switch (item.getItemId()) {
                 case R.id.navigation_weather:
                     mainMenuPresenter.initViewWeather();
+                    updateToolsBarMenu(getString(R.string.title_weather));
                     return true;
                 case R.id.navigation_forecast:
                     mainMenuPresenter.initViewForecast();
+                    updateToolsBarMenu(getString(R.string.title_forecast));
                     return true;
             }
             return false;
@@ -62,54 +65,42 @@ public class MainMenuActivity extends AppCompatActivity implements IMainMenuView
     @Override
     public void showViewMainMenuNavigationBottomView() {
         WeatherSearchFragment weatherFragment = WeatherSearchFragment.newInstance();
-        ForecastListFragment forecastFragment = ForecastListFragment.newInstance();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.containerMenu, weatherFragment, TAG_WeatherSearch)
+                .replace(R.id.containerMenu, weatherFragment)
                 .commit();
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.containerMenu, forecastFragment, TAG_ForecastList)
-                .commit();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .detach(forecastFragment)
-                .attach(weatherFragment)
-                .commit();
+        updateToolsBarMenu(getString(R.string.title_weather));
     }
 
     @Override
     public void showMenuViewWeather() {
-        WeatherSearchFragment weatherFragment = (WeatherSearchFragment) getSupportFragmentManager()
-                .findFragmentByTag(TAG_WeatherSearch);
-
-        ForecastListFragment forecastFragment = (ForecastListFragment) getSupportFragmentManager()
-                .findFragmentByTag(TAG_ForecastList);
+        WeatherSearchFragment weatherFragment = WeatherSearchFragment.newInstance();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .detach(forecastFragment)
-                .attach(weatherFragment)
+                .replace(R.id.containerMenu, weatherFragment)
                 .commit();
 
     }
 
     @Override
     public void showMenuViewForecast() {
-        WeatherSearchFragment weatherFragment = (WeatherSearchFragment) getSupportFragmentManager()
-                .findFragmentByTag(TAG_WeatherSearch);
 
-        ForecastListFragment forecastFragment = (ForecastListFragment) getSupportFragmentManager()
-                .findFragmentByTag(TAG_ForecastList);
+        ForecastListFragment forecastFragment = ForecastListFragment.newInstance();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .detach(weatherFragment)
-                .attach(forecastFragment)
+                .replace(R.id.containerMenu, forecastFragment)
                 .commit();
+    }
+
+    private void updateToolsBarMenu(String menu) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(menu);
+        }
     }
 
     private void initView(Bundle savedInstanceState) {
