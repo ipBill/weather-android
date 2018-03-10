@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">The Weather App</string>
+
+    <string name="title_weather">Weather</string>
+    <string name="title_forecast">Forecast</string>
+    <string name="edt_enter_city_name">Enter city name</string>
+    <string name="edt_please_enter_city_name">Please enter city name</string>
+    <string name="content_this_is_icon_weather">This is icon weather</string>
+    <string name="edt_bangkok">Bangkok</string>
+    <string name="dialog_just_moment_please">Just moment please</string>
+    <string name="dialog_fail_server">Data not found</string>
+    <string name="text_max_temperature">Maximum temperature</string>
+    <string name="text_min_temperature">Minimum temperature</string>
+    <string name="text_humidity">Humidity</string>
+    <string name="btn_change_to_fahrenheit">Change to &#xb0;F</string>
+    <string name="btn_change_to_celsius">Change to &#xb0;C</string>
+    <string name="btn_search">Search</string>
+
+</resources>
