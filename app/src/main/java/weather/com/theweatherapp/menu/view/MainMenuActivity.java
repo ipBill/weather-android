@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import weather.com.theweatherapp.R;
-import weather.com.theweatherapp.forecast.ForecastListFragment;
+import weather.com.theweatherapp.forecast.view.ForecastListFragment;
 import weather.com.theweatherapp.menu.presenter.MainMenuPresenter;
 import weather.com.theweatherapp.weather.view.WeatherSearchFragment;
 
@@ -49,14 +49,14 @@ public class MainMenuActivity extends AppCompatActivity implements IMainMenuView
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         mainMenuPresenter.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
         mainMenuPresenter.onRestoreInstanceState(savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
