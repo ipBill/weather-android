@@ -36,16 +36,6 @@ public class ForecastListPresenter implements IForecastListPresenter, IForecastL
     }
 
     @Override
-    public void onDestroy() {
-
-    }
-
-    @Override
-    public void onDestroyView() {
-
-    }
-
-    @Override
     public void searchWeatherWithCityName(String cityName, String unit) {
         if (!cityName.isEmpty()) {
             forecastListView.showProgressDialog();

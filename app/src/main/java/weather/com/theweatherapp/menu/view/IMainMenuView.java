@@ -10,5 +10,5 @@ public interface IMainMenuView {
 
     void showMenuViewForecast();
 
-    void showViewMainMenuNavigationBottomView();
+    void showViewMainMenuNavigationBottomViewAndViewPagerMenu();
 }

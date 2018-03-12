@@ -8,9 +8,9 @@ import weather.com.theweatherapp.base.BasePresenter;
 
 public interface IMainMenuPresenter extends BasePresenter {
 
-    void initViewWeather();
+    void updateMenuCurrentWeather();
 
-    void initViewForecast();
+    void updateMenuForecastWeather();
 
-    void initMainMenuNavigationBottomView();
+    void initMainMenuNavigationBottomViewAndViewPagerMenu();
 }

@@ -1,5 +1,5 @@
 # The Weather Application 
-weather-android
+
 - MVP android architecture
 - Butter Knife
 - Glide
@@ -7,3 +7,6 @@ weather-android
 - GSON
 - Parceler
 - Fancy Buttons
+- Saved instance state
+- ViewPager
+- Bottom navigation view

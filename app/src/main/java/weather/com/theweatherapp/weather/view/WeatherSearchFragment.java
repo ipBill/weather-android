@@ -122,11 +122,6 @@ public class WeatherSearchFragment extends Fragment implements IWeatherSearchVie
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_current_weather, container, false);
@@ -172,15 +167,21 @@ public class WeatherSearchFragment extends Fragment implements IWeatherSearchVie
 
     @Override
     public void showProgressDialog() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage(getString(R.string.dialog_just_moment_please));
-        progressDialog.show();
+        if (isAdded()) {
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setMessage(getString(R.string.dialog_just_moment_please));
+            progressDialog.show();
+        }
     }
 
     @Override
     public void hideProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
+        try {
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

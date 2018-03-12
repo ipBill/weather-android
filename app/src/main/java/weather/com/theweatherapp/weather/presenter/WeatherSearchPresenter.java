@@ -43,16 +43,6 @@ public class WeatherSearchPresenter implements IWeatherSearchPresenter, IWeather
     }
 
     @Override
-    public void onDestroy() {
-
-    }
-
-    @Override
-    public void onDestroyView() {
-
-    }
-
-    @Override
     public void searchWeatherWithCityName(@NonNull String cityName, @NonNull String unit) {
         if (!cityName.isEmpty()) {
             weatherSearchView.showProgressDialog();

@@ -137,15 +137,21 @@ public class ForecastListFragment extends Fragment implements IForecastListView 
 
     @Override
     public void showProgressDialog() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage(getString(R.string.dialog_just_moment_please));
-        progressDialog.show();
+        if (isAdded()) {
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setMessage(getString(R.string.dialog_just_moment_please));
+            progressDialog.show();
+        }
     }
 
     @Override
     public void hideProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
+        try {
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -170,21 +176,21 @@ public class ForecastListFragment extends Fragment implements IForecastListView 
 
     @Override
     public void showDialogCanNotLoadService() {
-        if(isAdded()) {
+        if (isAdded()) {
             showAlertDialog(getString(R.string.dialog_fail_server));
         }
     }
 
     @Override
     public void showDialogMessage(String message) {
-        if(isAdded()) {
+        if (isAdded()) {
             showAlertDialog(message);
         }
     }
 
     @Override
     public void updateViewForecastWeatherList(WeatherForecastDao dao) {
-        if(isAdded()) {
+        if (isAdded()) {
             hideSwipeLayout();
             forecastAdapterPresenter.updateViewForecastWeatherList(dao);
         }

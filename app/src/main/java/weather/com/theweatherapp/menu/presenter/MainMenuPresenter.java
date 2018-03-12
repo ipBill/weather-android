@@ -29,27 +29,17 @@ public class MainMenuPresenter implements IMainMenuPresenter {
     }
 
     @Override
-    public void onDestroy() {
-
+    public void initMainMenuNavigationBottomViewAndViewPagerMenu() {
+        mainMenuView.showViewMainMenuNavigationBottomViewAndViewPagerMenu();
     }
 
     @Override
-    public void onDestroyView() {
-
-    }
-
-    @Override
-    public void initMainMenuNavigationBottomView() {
-        mainMenuView.showViewMainMenuNavigationBottomView();
-    }
-
-    @Override
-    public void initViewWeather() {
+    public void updateMenuCurrentWeather() {
         mainMenuView.showMenuViewWeather();
     }
 
     @Override
-    public void initViewForecast() {
+    public void updateMenuForecastWeather() {
         mainMenuView.showMenuViewForecast();
     }
 }

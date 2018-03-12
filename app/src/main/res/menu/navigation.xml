@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/navigation_weather"
-        android:icon="@drawable/ic_thermometer_black_24dp"
+        android:icon="@drawable/ic_thermometer_black"
         android:title="@string/title_weather" />
 
     <item
         android:id="@+id/navigation_forecast"
-        android:icon="@drawable/ic_temperature_graph_black_24dp"
+        android:icon="@drawable/ic_temperature_graph_black"
         android:title="@string/title_forecast" />
 
 </menu>

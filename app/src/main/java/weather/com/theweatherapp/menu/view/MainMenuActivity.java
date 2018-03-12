@@ -3,6 +3,8 @@ package weather.com.theweatherapp.menu.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -11,18 +13,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import weather.com.theweatherapp.R;
 import weather.com.theweatherapp.forecast.view.ForecastListFragment;
+import weather.com.theweatherapp.menu.adapter.MainMenuViewPagerAdapter;
 import weather.com.theweatherapp.menu.presenter.MainMenuPresenter;
 import weather.com.theweatherapp.weather.view.WeatherSearchFragment;
 
 public class MainMenuActivity extends AppCompatActivity implements IMainMenuView {
 
-    private static final String TAG = "MainMenuActivity";
-    private static final String TAG_ForecastList = "ForecastListFragment";
-    private static final String TAG_WeatherSearch = "WeatherSearchFragment";
-    MainMenuPresenter mainMenuPresenter;
+    private MainMenuPresenter mainMenuPresenter;
 
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
+
+    @BindView(R.id.viewPagerMainMenu)
+    ViewPager viewPagerMainMenu;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -31,11 +34,11 @@ public class MainMenuActivity extends AppCompatActivity implements IMainMenuView
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_weather:
-                    mainMenuPresenter.initViewWeather();
+                    mainMenuPresenter.updateMenuCurrentWeather();
                     updateToolsBarMenu(getString(R.string.title_weather));
                     return true;
                 case R.id.navigation_forecast:
-                    mainMenuPresenter.initViewForecast();
+                    mainMenuPresenter.updateMenuForecastWeather();
                     updateToolsBarMenu(getString(R.string.title_forecast));
                     return true;
             }
@@ -63,37 +66,26 @@ public class MainMenuActivity extends AppCompatActivity implements IMainMenuView
     }
 
     @Override
-    public void showViewMainMenuNavigationBottomView() {
-        WeatherSearchFragment weatherFragment = WeatherSearchFragment.newInstance();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.containerMenu, weatherFragment)
-                .commit();
-
+    public void showViewMainMenuNavigationBottomViewAndViewPagerMenu() {
+        setupViewPager(viewPagerMainMenu);
         updateToolsBarMenu(getString(R.string.title_weather));
     }
 
     @Override
     public void showMenuViewWeather() {
-        WeatherSearchFragment weatherFragment = WeatherSearchFragment.newInstance();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.containerMenu, weatherFragment)
-                .commit();
-
+        viewPagerMainMenu.setCurrentItem(0);
     }
 
     @Override
     public void showMenuViewForecast() {
+        viewPagerMainMenu.setCurrentItem(1);
+    }
 
-        ForecastListFragment forecastFragment = ForecastListFragment.newInstance();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.containerMenu, forecastFragment)
-                .commit();
+    private void setupViewPager(ViewPager viewPager) {
+        MainMenuViewPagerAdapter adapter = new MainMenuViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(WeatherSearchFragment.newInstance());
+        adapter.addFragment(ForecastListFragment.newInstance());
+        viewPager.setAdapter(adapter);
     }
 
     private void updateToolsBarMenu(String menu) {
@@ -106,9 +98,7 @@ public class MainMenuActivity extends AppCompatActivity implements IMainMenuView
     private void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
         mainMenuPresenter = new MainMenuPresenter(this);
-        if (savedInstanceState == null) {
-            mainMenuPresenter.initMainMenuNavigationBottomView();
-        }
+        mainMenuPresenter.initMainMenuNavigationBottomViewAndViewPagerMenu();
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 

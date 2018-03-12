@@ -29,16 +29,6 @@ public class WeatherForecastAdapterPresenter implements IWeatherForecastAdapterP
     }
 
     @Override
-    public void onDestroy() {
-
-    }
-
-    @Override
-    public void onDestroyView() {
-
-    }
-
-    @Override
     public void updateViewForecastWeatherList(WeatherForecastDao dao) {
         weatherForecastView.updateViewForecastWeatherList(dao);
     }
